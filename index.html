@@ -70,12 +70,12 @@
         <div class="row justify-content-center fs-5 text-center">
           <div class="col-md-4">
             <p>
-              Seorang mahasiswa Universitas Diponegoro yang memiliki ketertarikan dalam berbagai hal termasuk Web Development. Apa saja yang bisa diperlajari akan dipelajari, kuncinya hanya keinginan. Jika ada keinginan semua akan bisa
+              Merupakan mahasiswa Universitas Diponegoro yang memiliki ketertarikan dalam berbagai bidang termasuk Web Development. Apa saja yang bisa diperlajari akan dipelajari, kuncinya hanya keinginan. Jika ada keinginan semua akan bisa
               dilakukan.
             </p>
           </div>
           <div class="col-md-4">
-            <p>Kelemahannya adalah cepat bosan dengan apa yang dipelajari, dengan mempelajari beberapa hal dalam satu waktu dengan bergantian akan mencegah rasa bosan.</p>
+            <p>Namun juga memiliki kelemahan yaitu rasa yang cepat bosan terhadap hal yang sedang dipelajari, dengan mempelajari beberapa hal dalam satu waktu dengan bergantian akan mencegah rasa bosan.</p>
           </div>
         </div>
       </div>
@@ -123,20 +123,29 @@
         </div>
         <div class="row justify-content-center">
           <div class="col-md-6">
-            <form>
+            <div class="alert alert-success alert-dismissible fade show d-none my-alert" role="alert">
+              <strong>Terimakasih!</strong> Pesan Anda sudah terkirim.
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <form name="portfolio-contact-form">
               <div class="mb-3">
                 <label for="name" class="form-label">Name</label>
-                <input type="text" class="form-control" id="name" aria-describedby="name" placeholder="Name" />
+                <input type="text" class="form-control" id="name" aria-describedby="name" placeholder="Name" name="name" />
               </div>
               <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" id="email" aria-describedby="email" placeholder="Email" />
+                <input type="email" class="form-control" id="email" aria-describedby="email" placeholder="Email" name="email" />
               </div>
               <div class="mb-3">
                 <label for="message" class="form-label">Message</label>
-                <textarea class="form-control" placeholder="Leave a Message here" id="message" rows="3"></textarea>
+                <textarea class="form-control" placeholder="Leave a Message here" id="message" rows="3" name="message"></textarea>
               </div>
-              <button type="submit" class="btn btn-primary">Submit</button>
+              <button type="submit" class="btn btn-primary btn-send">Submit</button>
+
+              <button class="btn btn-primary btn-loading d-none" type="button" disabled>
+                <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                Loading...
+              </button>
             </form>
           </div>
         </div>
@@ -158,5 +167,32 @@
     <!-- Akhir Footer -->
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+    <script>
+      const scriptURL = "https://script.google.com/macros/s/AKfycbwnUe07Ezpu2QN3x0uG_MYZe7R0eoJcx3sKsow5DkI9yvqEAXiOpmh6UJYaoI-ZJNaH/exec";
+      const form = document.forms["portfolio-contact-form"];
+      const btnSend = document.querySelector(".btn-send");
+      const btnLoading = document.querySelector(".btn-loading");
+      const myAlert = document.querySelector(".my-alert");
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        // ketika tombol submit diklik
+        btnSend.classList.toggle("d-none");
+        btnLoading.classList.toggle("d-none");
+        fetch(scriptURL, { method: "POST", body: new FormData(form) })
+          .then((response) => {
+            // ketika berhasil kirim
+            btnSend.classList.toggle("d-none");
+            btnLoading.classList.toggle("d-none");
+            // tampilkan alert
+            myAlert.classList.toggle("d-none");
+            console.log("Success!", response);
+            // reset
+            form.reset();
+          })
+          .catch((error) => console.error("Error!", error.message));
+      });
+    </script>
   </body>
 </html>
