@@ -10,16 +10,3 @@ section {
 #projects {
   background-color: #ece6e6;
 }
-
-.jumbotron .container {
-  /* min-height: 400px; */
-}
-
-.my-name {
-  margin-top: 10rem;
-  font-weight: bolder;
-}
-
-.my-photo {
-  margin-top: 3rem;
-}
